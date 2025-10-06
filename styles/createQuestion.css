@@ -1,0 +1,269 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@100..900&display=swap");
+:root {
+  --primary-color: #ce0037;
+  --secondary-color: #ff6b6b;
+  --accent-color: #6c5ce7;
+  --light-color: #f8f9fa;
+  --dark-color: #2d3436;
+  --success-color: #00b894;
+  --warning-color: #fdcb6e;
+  --danger-color: #e84393;
+  --gray-color: #dfe6e9;
+  --border-radius: 12px;
+  --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  --transition: all 0.3s ease;
+}
+
+.josefin-sans {
+  font-family: "Josefin Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+nav {
+  background-color: #d9d9d9;
+  padding: 20px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.leave {
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  background-color: #ce0037;
+  padding: 5px 20px;
+  border: none;
+  border-radius: 20px;
+  transition: 0.3s;
+  box-shadow: 0 0 0.3rem black;
+}
+
+.leave:hover {
+  color: #ce0037;
+  background-color: white;
+  transition: 0.3s;
+}
+
+.text h1 {
+  color: var(--primary-color);
+  font-weight: 700;
+  font-size: 2rem;
+  position: relative;
+  padding-bottom: 15px;
+}
+.text h1::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: var(--primary-color);
+  border-radius: 2px;
+}
+
+.main {
+  background-color: white;
+  box-shadow: 0 0 0.3rem black;
+  border-radius: 20px;
+}
+
+.image-upload-container {
+  text-align: center;
+  padding: 20px;
+  border: 2px dashed var(--gray-color);
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+  background-color: rgba(248, 249, 250, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.image-upload-container:hover {
+  border-color: var(--primary-color);
+  background-color: rgba(74, 107, 255, 0.05);
+}
+
+.image-upload-container h3 {
+  color: var(--dark-color);
+  font-weight: 600;
+}
+
+#image-preview {
+  max-width: 230px;
+  max-height: 200px;
+  border-radius: var(--border-radius);
+  display: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.upload-btn {
+  display: inline-block;
+  padding: 12px 25px;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 30px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.upload-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.quizname h1 {
+  font-size: 25px;
+  font-weight: 700;
+}
+#image-upload {
+  display: none;
+}
+
+.quizname input {
+  padding: 10px 25px;
+  width: 70%;
+  background-color: #d9d9d9;
+  font-size: 20px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+}
+
+#time {
+  width: 100px;
+}
+
+.quizname select {
+  padding: 10px 25px;
+  width: 70%;
+
+  background-color: #d9d9d9;
+  font-size: 20px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+}
+
+.inputhere {
+  padding-left: 60px;
+}
+
+#image-preview {
+  max-width: 300px;
+  max-height: 300px;
+  margin: 10px 0;
+  display: none;
+}
+
+#image-upload {
+  font-size: 20px;
+}
+
+.choose h1 {
+  font-size: 25px;
+}
+
+#session-quiz {
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.ques {
+  font-size: 30px;
+}
+
+.questioning {
+  width: 40%;
+  margin: auto;
+}
+
+.questioning h1 {
+  font-size: 25px;
+}
+
+.questioning input {
+  width: 100%;
+  background-color: #d9d9d9;
+  font-size: 20px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  padding: 10px 25px;
+}
+
+.answer h1 {
+  font-size: 25px;
+  margin-right: 10px;
+}
+
+.answer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.answer input {
+  width: 70%;
+  background-color: #d9d9d9;
+  font-size: 20px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  padding: 10px 25px;
+}
+
+.answer i {
+  font-size: 30px;
+  margin-left: 10px;
+  color: #ce0037;
+}
+
+.duration {
+  justify-content: center;
+  align-items: center;
+  margin-top: 2%;
+}
+
+.duration h1 {
+  margin: 0;
+  margin-right: 10px;
+}
+
+.answer i:hover {
+  cursor: pointer;
+}
+
+.mrquestion {
+  display: none;
+}
+
+#finish {
+  display: none;
+  background-color: #63ff72;
+  margin-right: 25px;
+}
+
+#finish:hover {
+  background-color: #9effa8;
+  color: #02760e;
+}
+
+@media screen and (max-width: 670px) {
+  .questioning {
+    width: 80%;
+    margin: auto;
+  }
+
+  .answer h1 {
+    font-size: 15px;
+    margin-bottom: 0;
+  }
+}

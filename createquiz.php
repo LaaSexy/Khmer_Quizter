@@ -1,12 +1,9 @@
 <?php
-
 session_start();
-
 $db_server = "localhost";
 $db_user = "root";
 $db_pass = "";
-$db_name = "quizapp";
-
+$db_name = "khmer-quizter";
 $conn = mysqli_connect($db_server, $db_user, $db_pass, $db_name);
 
 if (!$conn) {
@@ -14,18 +11,52 @@ if (!$conn) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Check if QuizName, Quiztype, and image are set
     if (isset($_POST["QuizName"]) && isset($_POST["Quiztype"]) && isset($_FILES["image"])) {
         $QuizName = $_POST["QuizName"];
         $Quiztype = $_POST["Quiztype"];
-
-        // Handle the image upload
         $file_name = $_FILES["image"]["name"];
         $file_temp = $_FILES["image"]["tmp_name"];
-        $upload_dir = "uploads/"; // Change this to your desired directory
-        $target_file = $upload_dir . basename($file_name);
+        $upload_dir = "uploads/";
+        
+        // Create uploads directory if it doesn't exist
+        if (!file_exists($upload_dir)) {
+            if (!mkdir($upload_dir, 0777, true)) {
+                echo "Failed to create upload directory!";
+                exit;
+            }
+        }
+        
+        // Check if directory is writable
+        if (!is_writable($upload_dir)) {
+            echo "Upload directory is not writable!";
+            exit;
+        }
+        
+        // Generate unique filename to avoid conflicts
+        $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
+        $unique_filename = time() . '_' . uniqid() . '.' . $file_extension;
+        $target_file = $upload_dir . $unique_filename;
+        
+        // Validate image file
+        $check = getimagesize($file_temp);
+        if ($check === false) {
+            echo "File is not a valid image!";
+            exit;
+        }
+        
+        // Check file size (max 5MB)
+        if ($_FILES["image"]["size"] > 5000000) {
+            echo "File is too large. Maximum size is 5MB.";
+            exit;
+        }
+        
+        // Allow certain file formats
+        $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
+        if (!in_array(strtolower($file_extension), $allowed_types)) {
+            echo "Only JPG, JPEG, PNG & GIF files are allowed.";
+            exit;
+        }
 
-        // Generate a unique quiz code
         function generateQuizCode($length = 6) {
             $characters = '0123456789';
             $code = '';
@@ -37,27 +68,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $quizCode = generateQuizCode();
 
-        // Check if the generated quiz code already exists
         $sql = "SELECT COUNT(*) AS count FROM Quiz WHERE QuizCode = '$quizCode'";
         $result = mysqli_query($conn, $sql);
         if ($result && mysqli_num_rows($result) > 0) {
             $row = mysqli_fetch_assoc($result);
             if ($row['count'] > 0) {
-                // If the quiz code already exists, generate a new one
                 $quizCode = generateQuizCode();
             }
         }
 
-        // Move the uploaded image to the destination directory
         if (move_uploaded_file($file_temp, $target_file)) {
-            // Insert quiz details into the database
             $createquiz = "INSERT INTO Quiz (QuizTitle, Type, CreatorID, Image, QuizCode) VALUES ('$QuizName', '$Quiztype', '{$_SESSION['UserID']}', '$target_file', '$quizCode')";
             if (mysqli_query($conn, $createquiz)) {
                 $quizID = mysqli_insert_id($conn);
                 $_SESSION['QuizID'] = $quizID;
                 $_SESSION['quiz'] = $QuizName;
-
-                // Get the number of questions associated with the quiz
                 $sql = "SELECT COUNT(*) AS table_length FROM QuizQuestion WHERE QuizID = $quizID";
                 $result = mysqli_query($conn, $sql);
                 if ($result !== false) {
@@ -69,17 +94,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
                 echo "Create Success!";
             } else {
+                if (file_exists($target_file)) {
+                    unlink($target_file);
+                }
                 echo "Error: " . mysqli_error($conn);
             }
         } else {
-            echo "Error uploading image.";
+            echo "Error uploading image. Please check directory permissions.";
         }
     } else {
         echo "Invalid request.";
     }
 }
 
-// Close the database connection
 mysqli_close($conn);
-
 ?>

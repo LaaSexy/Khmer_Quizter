@@ -1,21 +1,16 @@
 <?php
 session_start();
-include "database.php";
+include "database/database.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Check if the quiz ID is provided
     if (isset($_POST["quizId"])) {
         $quizId = $_POST["quizId"];
-       
         try {
             $trydelete = "DELETE FROM Quiz WHERE QuizID = '$quizId'";
             $resulte = mysqli_query($conn, $trydelete);
         } catch (Exception $e) {
-            // Handle the exception here
             echo "Error: " . $e->getMessage();
         }
-        
-        // If the first delete operation was successful or no exception occurred
         $getQuestionsQuery = "SELECT QuestionID FROM QuizQuestion WHERE QuizID = '$quizId'";
         $result = mysqli_query($conn, $getQuestionsQuery);
         if ($result) {
@@ -44,14 +39,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             }
         }
-        
-        
-       
-        
     } else {
         echo "Error: Quiz ID is missing.";
     }
 } else {
-    // Invalid request method
     echo "Error: Invalid request method.";
 }

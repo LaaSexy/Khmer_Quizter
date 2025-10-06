@@ -1,384 +1,158 @@
 <?php
 session_start();
-include "database.php";
+include "database/database.php";
 
-// Check if the user is not logged in
 if (!isset($_SESSION['Username'])) {
-    // Set default values for the session variables
     $_SESSION['Username'] = "Guest";
     $_SESSION['Email'] = "guest";
     $_SESSION['Role'] = 'Guest';
     $_SESSION['UserID'] = 11;
     $_SESSION['Profile'] = "https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png";
 }
-
-// Redirect to admin page if user is an admin
-
-
-$currentPage = 'home.php';
-include_once 'nav.php';
 ?>
-<style>
-    .changename {
-        box-shadow: 0 0 0.2rem black;
-        padding: 25px;
-        border-radius: 15px;
-    }
-
-    .back {
-        background-color: white;
-        color: #CE0037;
-        border: none;
-        font-size: 25px;
-        font-weight: 700;
-        padding: 10px 25px;
-        transition: 0.2s;
-        border-radius: 15px;
-        box-shadow: 0 0 0.2rem black;
-    }
-
-    .back:hover {
-        background-color: #CE0037;
-        color: white;
-        transition: 0.2s;
-    }
-
-    .name {
-        justify-content: start;
-        align-items: center;
-    }
-
-    .logg {
-        justify-content: center;
-        align-items: center;
-    }
-
-    .name h1 {
-        font-size: 30px;
-        margin: 0;
-    }
-
-    .change {
-        background-color: #CE0037;
-        color: white;
-        font-weight: 700;
-        border: none;
-        padding: 5px 10px;
-        border-radius: 20px;
-        box-shadow: 0 0 0.2rem black;
-        transition: 0.2s;
-    }
-
-    .change:hover {
-        background-color: white;
-        color: #CE0037;
-        transition: 0.2s;
-    }
-
-    .logg button {
-        padding: 10px 20px;
-        font-size: 30px;
-    }
-
-    .changethename {
-        position: fixed;
-        top: 0;
-        z-index: 10;
-        background-color: rgba(37, 37, 37, 0.445);
-        width: 100%;
-        height: 100%;
-        display: flex;
-    }
-
-    .changethepassword {
-        position: fixed;
-        top: 0;
-        z-index: 10;
-        background-color: rgba(37, 37, 37, 0.445);
-        width: 100%;
-        height: 100%;
-        display: flex;
-    }
-
-    .biox {
-        background-color: white;
-        width: 50%;
-        margin: auto;
-        text-align: center;
-
-        padding: 25px;
-        border-radius: 25px;
-    }
-
-    .biox input[type=text],
-    .biox input[type=password] {
-        width: 50%;
-        background-color: #D9D9D9;
-        font-size: 20px;
-        border-radius: 20px;
-        border: none;
-        outline: none;
-        padding: 10px 25px;
-    }
-
-    .biox h1 {
-        font-size: 25px;
-    }
-
-    .close i {
-        font-size: 30px;
-        color: red;
-    }
-
-    .closepass i {
-        font-size: 30px;
-        color: red;
-    }
-
-    .closepass i:hover {
-        cursor: pointer;
-    }
-
-    .confirmchangename {
-        background-color: #CE0037;
-        color: white;
-        font-weight: 700;
-        border: none;
-        padding: 5px 20px;
-        border-radius: 20px;
-        box-shadow: 0 0 0.2rem black;
-        transition: 0.2s;
-        font-size: 25px;
-    }
-
-    .confirmchangepassword {
-        background-color: #CE0037;
-        color: white;
-        font-weight: 700;
-        border: none;
-        padding: 5px 20px;
-        border-radius: 20px;
-        box-shadow: 0 0 0.2rem black;
-        transition: 0.2s;
-        font-size: 25px;
-    }
-
-    .confirmchangepassword:hover {
-        background-color: white;
-        color: #CE0037;
-        transition: 0.2s;
-    }
-
-    .confirmchangename:hover {
-        background-color: white;
-        color: #CE0037;
-        transition: 0.2s;
-    }
-
-    .close i:hover {
-        cursor: pointer;
-    }
-
-    @media screen and (max-width: 670px) {
-        .biox {
-            width: 100%;
-        }
-    }
-</style>
-
-<div class="changethename">
-
-    <div class="biox josefin-sans">
-        <div class="text-end close">
-            <i class="bi bi-x-square-fill"></i>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="icon" type="image/png" href="./assets/Khmer_Quizter.png">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="styles/change.css">
+    <title>Khmer Quizter</title>
+</head>
+<nav>
+    <button class="leave leaveBtn josefin-sans"><i class="bi bi-backspace-fill"></i> Leave</button>
+</nav>
+<div class="profile-container">
+    <div class="profile-card">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <div class="profile-avatar-wrapper">
+                <div class="profile-avatar">
+                    <img src="<?php echo $_SESSION['Profile']; ?>" alt="Profile">
+                </div>
+                <div class="profile-info">
+                    <h1 class="username-display"><?php echo $_SESSION['Username']; ?></h1>
+                    <div class="profile-email">
+                        <i class="bi bi-envelope-fill"></i>
+                        <span><?php echo $_SESSION['Email']; ?></span>
+                    </div>
+                </div>
+            </div>
         </div>
-        <h1>Your new name</h1>
-        <input type="text" name="new_name" placeholder="New name" class="newname"><br>
-        <!-- Include a hidden input field to identify the form -->
-        <input type="hidden" name="form_type" value="change_name_form">
-        <input type="button" value="Confirm" class="mt-4 confirmchangename">
-    </div>
 
-</div>
-<div class="changethepassword">
+        <!-- Profile Content -->
+        <div class="profile-content">
+            <!-- Username Setting -->
+            <div class="setting-item">
+                <div class="setting-row">
+                    <div class="setting-left">
+                        <div class="setting-icon icon-red">
+                            <i class="bi bi-person-fill"></i>
+                        </div>
+                        <div class="setting-info">
+                            <p class="setting-label">Username</p>
+                            <p class="setting-value username-display"><?php echo $_SESSION['Username']; ?></p>
+                        </div>
+                    </div>
+                    <button class="change-btn btn-red" data-bs-toggle="modal" data-bs-target="#usernameModal"><i class="bi bi-person-fill"></i> Change Username</button>
+                </div>
+            </div>
 
-    <div class="biox josefin-sans">
-        <div class="text-end closepass">
-            <i class="bi bi-x-square-fill"></i>
-        </div>
-        <h1>Change password</h1>
-        <input type="password" name="new_name" placeholder="Current password" class="cpassword"><br>
-        <input type="password" name="new_name" placeholder="New password" class="mt-4 npassword"><br>
-        <input type="button" value="Confirm" class="mt-4 confirmchangepassword">
-    </div>
+            <!-- Email Setting -->
+            <div class="setting-item">
+                <div class="setting-row">
+                    <div class="setting-left">
+                        <div class="setting-icon icon-purple">
+                            <i class="bi bi-envelope-fill"></i>
+                        </div>
+                        <div class="setting-info">
+                            <p class="setting-label">Email Address</p>
+                            <p class="setting-value"><?php echo $_SESSION['Email']; ?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-</div>
-<div class="container changename mt-5 josefin-sans">
-    <button class="back"><i class="bi bi-backspace-fill"></i> Back</button>
-    <div class="row mt-3">
-        <div class="col-xxl-3 col-md-3">
+            <!-- Password Setting -->
+            <div class="setting-item">
+                <div class="setting-row">
+                    <div class="setting-left">
+                        <div class="setting-icon icon-blue">
+                            <i class="bi bi-lock-fill"></i>
+                        </div>
+                        <div class="setting-info">
+                            <p class="setting-label">Password</p>
+                            <p class="setting-value">••••••••</p>
+                        </div>
+                    </div>
+                    <button class="change-btn btn-red" data-bs-toggle="modal" data-bs-target="#passwordModal"><i class="bi bi-lock-fill"></i> Change Password</button>
+                </div>
+            </div>
 
-        </div>
-        <div class="col-xxl-9 col-md-9 col-12 josefin-sans name d-flex">
-            <h1>Username:</h1>
-            <h1 class="mx-2 usernamehere"><?php echo $_SESSION['Username'] ?></h1>
-            <button class="change mx-3 changeuser">Change Username</button>
-        </div>
-    </div>
-    <div class="row mt-3">
-        <div class="col-xxl-3 col-md-3">
-
-        </div>
-        <div class="col-xxl-9 col-md-9 col-12 josefin-sans name d-flex">
-            <h1>Email:</h1>
-            <h1 class="mx-2"><?php echo $_SESSION['Email'] ?></h1>
-
-        </div>
-    </div>
-    <div class="row mt-3">
-        <div class="col-xxl-3 col-md-3">
-
-        </div>
-        <div class="col-xxl-9 col-md-9 col-12 josefin-sans name d-flex">
-            <button class="change mx-3 changepasss">Change Password</button>
-
-        </div>
-    </div>
-    <br><br>
-    <div class="row mt-5">
-        <div class=" col-12 josefin-sans logg d-flex">
-            <button class="change mx-3">Log out</button>
+            <!-- Logout Section -->
+            <div class="logout-section">
+                <button class="logout-btn">
+                    <i class="bi bi-box-arrow-right"></i>
+                    Log Out
+                </button>
+            </div>
         </div>
     </div>
 </div>
 
+<!-- Change Username Modal -->
+<div class="modal fade" id="usernameModal" tabindex="-1" aria-labelledby="usernameModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="usernameModalLabel">Change Username</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="newUsername" class="form-label">New Username</label>
+                    <input type="text" class="form-control" id="newUsername" placeholder="Enter new username">
+                </div>
+                <button type="button" class="btn-modal-submit btn-submit-red" id="confirmUsername">Confirm Change</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-
-<script>
-    $(document).ready(function() {
-        $('.changethename').hide()
-        $('.changethepassword').hide()
-        $('.back').click(function() {
-            history.back();
-        })
-        $('.logg button').click(function() {
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "logout.php", true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    console.log(xhr.responseText);
-                    window.location.href = "index.php";
-                }
-            };
-            xhr.send();
-        })
-        $('.changepasss').click(function() {
-            $('.changethepassword').fadeIn(100)
-        })
-        $('.changeuser').click(function() {
-            $('.changethename').fadeIn(100)
-        })
-        $('.close i').click(function() {
-            $('.changethename').fadeOut(100)
-        })
-        $('.closepass i').click(function() {
-            $('.changethepassword').fadeOut(100)
-        })
-        $('.confirmchangename').click(function(event) {
-            event.preventDefault(); // Prevent the form from submitting normally
-
-            var newname = $(this).siblings().eq(2).val();
-            if (!newname) {
-                Swal.fire({
-                    title: 'Invalid Name!',
-                    text: "Name can't be empty",
-                    icon: 'error',
-                    confirmButtonText: 'I understand',
-                    confirmButtonColor: 'red'
-                })
-                return
-            }
-            console.log(newname);
-            var formData = new FormData();
-            formData.append('new_name', newname);
-
-            $.ajax({
-                type: 'POST',
-                url: 'changename.php',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    Swal.fire({
-                        title: 'Changed Successful!',
-                        text: "Name change successfully",
-                        icon: 'success',
-                        confirmButtonText: 'Confirm',
-                        confirmButtonColor: 'green'
-                    })
-
-                    $('.usernamehere').html(newname)
-                    $('.changethename').fadeOut(100)
-                    $('.newname').val("");
-
-                },
-                error: function(xhr, status, error) {
-                    // Handle errors
-                    console.error(error);
-                }
-            });
-        });
-        $('.confirmchangepassword').click(function() {
-            // Get the input values
-            var currentPassword = $('.cpassword').val();
-            var newPassword = $('.npassword').val();
-            if (!currentPassword || !newPassword) {
-                Swal.fire({
-                    title: 'Change Password Fail!',
-                    text: "Fill all the requirment to change password",
-                    icon: 'error',
-                    confirmButtonText: 'I understand',
-                    confirmButtonColor: 'red'
-                })
-                return
-            }
-            // Send AJAX request
-            $.ajax({
-                type: 'POST',
-                url: 'changepassword.php',
-                data: {
-                    current_password: currentPassword,
-                    new_password: newPassword
-                },
-                success: function(response) {
-                    if (response === "Password changed successfully") {
-                        Swal.fire({
-                            title: 'Changed password successful!',
-                            icon: 'success',
-                            confirmButtonText: 'Confirm',
-                            confirmButtonColor: 'green'
-                        })
-                        $('.changethepassword').fadeOut(100)
-                        $('.cpassword').val("");
-                        $('.npassword').val("");
-                    } else if (response === "Current password does not match") {
-                        Swal.fire({
-                            title: 'Change Password Fail!',
-                            text: "current password doesn't match",
-                            icon: 'error',
-                            confirmButtonText: 'Confirm',
-                            confirmButtonColor: 'red'
-                        })
-                    }
-
-                    // You can update the UI or display a message here
-                },
-                error: function(xhr, status, error) {
-                    // Handle errors
-                    console.error(error);
-                }
-            });
-        });
-
-    })
-</script>
+<!-- Change Password Modal -->
+<div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="passwordModalLabel">Change Password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="currentPassword" class="form-label">Current Password</label>
+                    <div class="position-relative">
+                        <input type="password" class="form-control" id="currentPassword" placeholder="Enter current password">
+                        <button type="button" class="password-toggle-btn" onclick="togglePassword('currentPassword')">
+                            <i class="bi bi-eye-fill"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="newPassword" class="form-label">New Password</label>
+                    <div class="position-relative">
+                        <input type="password" class="form-control" id="newPassword" placeholder="Enter new password">
+                        <button type="button" class="password-toggle-btn" onclick="togglePassword('newPassword')">
+                            <i class="bi bi-eye-fill"></i>
+                        </button>
+                    </div>
+                </div>
+                <button type="button" class="btn-modal-submit btn-submit-red" id="confirmPassword">Confirm Change</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="javascripts/change.js"></script>

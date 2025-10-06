@@ -1,0 +1,44 @@
+.quiz {
+  box-shadow: 0 0 0.2rem black;
+  padding: 20px;
+  border-radius: 15px;
+  background-color: #ffcedb;
+}
+
+.quiz h1 {
+  font-weight: 800;
+}
+
+.eques {
+  box-shadow: 0 0 0.2rem black;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.back {
+  background-color: white;
+  color: #ce0037;
+  border: none;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 10px 25px;
+  transition: 0.2s;
+  border-radius: 15px;
+  box-shadow: 0 0 0.2rem black;
+}
+
+.addquestion {
+  padding: 5px 20px;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.back:hover {
+  background-color: #ce0037;
+  color: white;
+  transition: 0.2s;
+}
+
+.edit {
+  background-color: yellow;
+}

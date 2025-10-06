@@ -1,5 +1,5 @@
 <?php
-include "database.php";
+include "database/database.php";
 session_start();
 if (!isset($_SESSION['Username'])) {
     header("Location: index.php");
@@ -10,7 +10,7 @@ if ($_SESSION['Role'] !== "Admin") {
     exit;
 }
 $currentPage = "quizes.php";
-include_once "nav2.php";
+include_once "dashboard.php";
 $getquizamount = "SELECT COUNT(*) AS quiz_count FROM Quiz ";
 $result = mysqli_query($conn, $getquizamount);
 if ($result) {
@@ -39,19 +39,14 @@ if ($result) {
         overflow: hidden;
         display: flex;
         justify-content: center;
-        /* Center horizontally */
         align-items: center;
     }
 
     .image-container img {
         border-radius: 5px 5px 0 0;
         width: 100%;
-        /* Make sure the image doesn't exceed the container width */
         height: 100%;
-        /* Make sure the image doesn't exceed the container height */
         display: block;
-        /* Ensure the image is displayed as a block element */
-
     }
 
     .ccc {
@@ -131,43 +126,30 @@ if ($result) {
 
     .modals {
         display: none;
-        /* Hidden by default */
         position: fixed;
-        /* Stay in place */
         z-index: 15;
-        /* Sit on top */
         left: 0;
         top: 0;
         width: 100%;
-        /* Full width */
         height: 100%;
-        /* Full height */
         overflow: auto;
-        /* Enable scroll if needed */
         background-color: rgb(0, 0, 0);
-        /* Fallback color */
         background-color: rgba(0, 0, 0, 0.4);
-        /* Black w/ opacity */
     }
 
-    /* Modal content */
     .modal-contents {
         background-color: #fefefe;
         margin: 15% auto;
-        /* 15% from the top and centered */
         padding: 20px;
         border: 1px solid #888;
         width: 30%;
         text-align: center;
-
-        /* Could be more or less, depending on screen size */
     }
 
     .carde:hover {
         cursor: pointer;
     }
 
-    /* Close button */
     .close {
         text-align: left;
         color: #aaa;
@@ -402,7 +384,7 @@ if ($result) {
             $('.detail .authorr').html(author)
             $('.detail .plays').html(play + " plays");
             $('.detail .quizcodee').html("QuizCode : " + "<span id='quizCode'>" + quizcode + "</span>" + " <i class='bi bi-copy' id='copyIcon'></i>")
-            $('.detail .numofques').html(numofques + " Ques")
+            $('.detail .numofques').html(numofques + " Questions")
 
             $('.detail .edit').click(function() {
                 var url = "edit.php?quizid=" + quizid;

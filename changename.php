@@ -1,7 +1,6 @@
 <?php
-include "database.php";
+include "database/database.php";
 session_start();
-
 
 if (isset($_POST["new_name"])) {
     $newName = mysqli_real_escape_string($conn, $_POST['new_name']);

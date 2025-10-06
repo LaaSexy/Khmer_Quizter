@@ -1,5 +1,5 @@
 <?php
-include "database.php";
+include "database/database.php";
 session_start();
 if (!isset($_SESSION['Username'])) {
     header("Location: index.php");
@@ -10,14 +10,10 @@ if ($_SESSION['Role'] !== "Admin") {
     exit;
 }
 $currentPage = "record.php";
-include_once "nav2.php";
-
+include_once "dashboard.php";
 
 function getTotalPlaysByCategory($conn, $category)
 {
-    // Assuming $conn is your database connection object
-
-    // Prepare the SQL query
     $getPlaysQuery = "SELECT 
                             SUM(Quiz.Play) AS total_plays
                         FROM 
@@ -25,11 +21,7 @@ function getTotalPlaysByCategory($conn, $category)
                             JOIN UserAccount ON Quiz.CreatorID = UserAccount.UserID 
                         WHERE 
                             Quiz.type = '$category'";
-
-    // Execute the query
     $result = mysqli_query($conn, $getPlaysQuery);
-
-    // Check if the query was successful
     if ($result) {
         $row = $result->fetch_assoc();
         $totalPlays = $row['total_plays'];
@@ -87,45 +79,26 @@ function getTotalPlaysByCategory($conn, $category)
 
     .background-primary {
         background: #EB3349;
-        /* fallback for old browsers */
         background: -webkit-linear-gradient(to right, #F45C43, #EB3349);
-        /* Chrome 10-25, Safari 5.1-6 */
         background: linear-gradient(to right, #F45C43, #EB3349);
-        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-
     }
 
     .background-secondary {
         background: #4776E6;
-        /* fallback for old browsers */
         background: -webkit-linear-gradient(to right, #8E54E9, #4776E6);
-        /* Chrome 10-25, Safari 5.1-6 */
         background: linear-gradient(to right, #8E54E9, #4776E6);
-        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-
     }
 
     .background-success {
         background: #7F00FF;
-        /* fallback for old browsers */
         background: -webkit-linear-gradient(to right, #E100FF, #7F00FF);
-        /* Chrome 10-25, Safari 5.1-6 */
         background: linear-gradient(to right, #E100FF, #7F00FF);
-        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
     }
 
     .background-warning {
         background: #F3904F;
-        /* fallback for old browsers */
         background: -webkit-linear-gradient(to right, #3B4371, #F3904F);
-        /* Chrome 10-25, Safari 5.1-6 */
         background: linear-gradient(to right, #3B4371, #F3904F);
-        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-
     }
 </style>
 
@@ -163,8 +136,6 @@ function getTotalPlaysByCategory($conn, $category)
 
                             </h2>
 
-
-
                             <?php
                             $getlastuser = "SELECT COUNT(*) as lastuser
                                FROM useraccount
@@ -195,9 +166,7 @@ function getTotalPlaysByCategory($conn, $category)
                             }
 
                             ?>
-
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -228,9 +197,6 @@ function getTotalPlaysByCategory($conn, $category)
                                 ?>
 
                             </h2>
-
-
-
                             <?php
                             $getlastquiz = "SELECT COUNT(*) as lastquiz
                                FROM quiz
@@ -259,11 +225,8 @@ function getTotalPlaysByCategory($conn, $category)
                                 </h4>
                             <?php
                             }
-
                             ?>
-
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -293,9 +256,6 @@ function getTotalPlaysByCategory($conn, $category)
                                 ?>
 
                             </h2>
-
-
-
                             <?php
                             $getlastplay = "SELECT COUNT(*) as yesterdayplay
                             FROM score
@@ -330,11 +290,8 @@ function getTotalPlaysByCategory($conn, $category)
                                 </h4>
                             <?php
                             }
-
                             ?>
-
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -395,8 +352,6 @@ function getTotalPlaysByCategory($conn, $category)
                     echo $row['allplays'];
                 }
                 ?>
-
-
             </h4>
         </div>
         <div class="col-xxl-8 col-md-12 p-3">
@@ -406,15 +361,12 @@ function getTotalPlaysByCategory($conn, $category)
             <div class="d-flex justiy-content-center align-items-center">
                 <canvas id="pieChart"></canvas>
             </div>
-
         </div>
     </div>
 </div>
 <script>
     $(document).ready(function() {
         $('#dashboard1 .child').hide();
-
-        // Loop through each child and animate with delay
         $('#dashboard1 .child').each(function(index) {
             $(this).delay(300 * index).fadeIn(400).animate({
                 marginLeft: '0'
@@ -431,8 +383,6 @@ function getTotalPlaysByCategory($conn, $category)
         <?php $gamesPlayCount = getTotalPlaysByCategory($conn, "General Knowledge"); ?>
     ];
     var backgroundColors = ['#ff9999', '#66b3ff', '#99ff99', '#ffcc99', '#c2c2f0'];
-
-    // Create bar chart
     var barCtx = document.getElementById('barChart').getContext('2d');
     var barChart = new Chart(barCtx, {
         type: 'bar',

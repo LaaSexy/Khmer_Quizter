@@ -1,24 +1,30 @@
 <?php
-include "database.php";
+include "database/database.php";
 session_start();
 $currentPage = 'home.php';
 include_once "nav.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $QuizID = $_GET['scorequiz'];
-    $query = "SELECT *,
-    COUNT(*) AS PlayCount,
-     MAX(Score) AS MaxScore
-    FROM Quiz 
-    JOIN Score ON Quiz.QuizID = Score.QuizID 
-    JOIN UserAccount ON Score.UserID = UserAccount.UserID 
-    WHERE Quiz.QuizID = '$QuizID' 
-    GROUP BY UserAccount.UserID, UserAccount.UserName
-    ORDER BY MaxScore DESC;";
+    $query = "SELECT 
+                Quiz.QuizTitle,
+                Quiz.Image,
+                UserAccount.Username,
+                UserAccount.UserID,
+                COUNT(UserQuizAttempts.AttemptID) AS PlayCount,
+                MAX(UserQuizAttempts.Score) AS MaxScore,
+                MAX(UserQuizAttempts.CompletedAt) AS Date
+              FROM Quiz 
+              LEFT JOIN UserQuizAttempts ON Quiz.QuizID = UserQuizAttempts.QuizID 
+              LEFT JOIN UserAccount ON UserQuizAttempts.UserID = UserAccount.UserID 
+              WHERE Quiz.QuizID = '$QuizID' 
+              GROUP BY UserAccount.UserID, UserAccount.Username
+              ORDER BY MaxScore DESC, PlayCount ASC";
+              
     $result = mysqli_query($conn, $query);
     if ($result) {
-        $row = mysqli_fetch_assoc($result); // Fetch the first row
-        if ($row) { // Check if a row was fetched
+        $row = mysqli_fetch_assoc($result); 
+        if ($row && $row['Username'] !== null) { 
 ?>
             <style>
                 .button button {
@@ -75,6 +81,13 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                     max-height: 250px;
                     overflow-y: scroll;
                 }
+                
+                .table thead th {
+                    position: sticky;
+                    top: 0;
+                    background-color: #343a40;
+                    z-index: 10;
+                }
             </style>
             <div class="container">
                 <div class="row">
@@ -101,33 +114,38 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                             <tbody>
                                 <?php
                                 $rank = 1;
-                                do {
+                                mysqli_data_seek($result, 0);
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    if ($row['Username'] === null) continue;
                                 ?>
                                     <tr>
                                         <td><?php echo $rank; ?></td>
                                         <td><?php echo $row['Username']; ?></td>
                                         <td><?php
-                                            $score = $row['MaxScore'];
-                                            $getquestionamount = "SELECT QuestionID from QuizQuestion where QuizID = '$QuizID'";
+                                            $score = $row['MaxScore'] ?? 0;
+                                            $getquestionamount = "SELECT COUNT(*) as total FROM QuizQuestion WHERE QuizID = '$QuizID'";
                                             $resultt = mysqli_query($conn, $getquestionamount);
                                             if ($resultt) {
-                                                $numRows = mysqli_num_rows($resultt);
+                                                $questionRow = mysqli_fetch_assoc($resultt);
+                                                $numRows = $questionRow['total'];
                                                 if ($score > $numRows) {
                                                     $score = $numRows;
                                                 }
                                             }
-
-                                            echo $score;
-
-
-
+                                            echo $score . "/" . $numRows;
                                             ?></td>
                                         <td><?php echo $row['PlayCount']; ?></td>
-                                        <td><?php echo $row['Date']; ?></td>
+                                        <td><?php 
+                                            if ($row['Date']) {
+                                                echo date('M j, Y', strtotime($row['Date']));
+                                            } else {
+                                                echo "N/A";
+                                            }
+                                        ?></td>
                                     </tr>
                                 <?php
-                                    $rank++; // Increment rank
-                                } while ($row = mysqli_fetch_assoc($result));
+                                    $rank++;
+                                }
                                 ?>
                             </tbody>
                         </table>
@@ -135,7 +153,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 </div>
             </div>
         <?php
-
         } else {
         ?>
             <style>
@@ -188,16 +205,24 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 .ttitle h1 {
                     font-size: 25px;
                 }
-
-                .table {
-                    height: 250px;
-                    overflow-y: scroll;
-                }
             </style>
             <div class="container josefin-sans">
                 <div class="row">
                     <div class="col-12 button"><button type='button'><i class="bi bi-backspace-fill"></i> Leave</button></div>
-                    <h1 class="text-center">No user have took this quiz yet.</h1>
+                    <div class="col-12 text-center">
+                        <div class="image-container">
+                            <?php
+                            $quizQuery = "SELECT QuizTitle, Image FROM Quiz WHERE QuizID = '$QuizID'";
+                            $quizResult = mysqli_query($conn, $quizQuery);
+                            if ($quizResult && $quizRow = mysqli_fetch_assoc($quizResult)) {
+                            ?>
+                                <img src="<?php echo $quizRow['Image'] ?>">
+                            <?php } ?>
+                        </div>
+                        <h1 class="mt-3"><?php echo $quizRow['QuizTitle'] ?? 'Quiz'; ?></h1>
+                        <h2 class="text-muted mt-4">No users have taken this quiz yet.</h2>
+                        <p class="text-muted">Be the first to attempt this quiz!</p>
+                    </div>
                 </div>
             </div>
 <?php

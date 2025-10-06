@@ -1,0 +1,392 @@
+:root {
+  --primary-color: #ce0037;
+  --primary-light: #ffcedb;
+  --primary-dark: #9e0029;
+  --success-color: #10b981;
+  --text-dark: #1f2937;
+  --text-light: #6b7280;
+  --bg-light: #f9fafb;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.stat-badge i {
+  color: var(--primary-color);
+}
+
+.quiz-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  height: 100%;
+}
+
+.quiz-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: var(--shadow-xl);
+}
+
+.quiz-card-image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
+.quiz-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.quiz-card:hover .quiz-card-image img {
+  transform: scale(1.1);
+}
+
+.quiz-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-weight: 700;
+  color: var(--primary-color);
+  font-size: 0.9rem;
+  box-shadow: var(--shadow-md);
+}
+
+.quiz-card-body {
+  padding: 20px;
+}
+
+.quiz-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.quiz-author {
+  color: var(--text-light);
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quiz-author i {
+  color: var(--primary-color);
+}
+
+.quiz-stats {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.detail {
+  background-color: rgba(37, 37, 37, 0.445);
+  position: fixed;
+  top: 0;
+  height: 100%;
+  z-index: 10;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+
+.detail .image-container {
+  max-width: 500px;
+}
+
+.carde {
+  transition: 0.3s;
+  border-radius: 20px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.carde:hover {
+  cursor: pointer;
+  transform: translateY(-10px);
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
+    rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  transition: 0.3s;
+}
+
+.quiztitle {
+  font-weight: 700;
+  font-size: 30px;
+}
+
+.titlle {
+  align-items: center;
+  justify-content: space-between;
+}
+
+.titlle i {
+  font-size: 30px;
+  color: red;
+}
+
+.close:hover {
+  cursor: pointer;
+  color: #ce0037;
+}
+
+.numofques {
+  background-color: #d9d9d9;
+  color: #515151;
+  width: 40%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  padding-top: 3px;
+}
+
+.contentbody div {
+  margin: 8px 0;
+}
+
+.play {
+  padding: 7px 30px;
+  border: none;
+  font-size: 30px;
+  font-weight: 700;
+  background-color: #63ff72;
+  color: #02760e;
+  border-radius: 25px;
+  box-shadow: 0 0 0.3rem black;
+  transition: 0.3s;
+}
+
+.play:hover {
+  background-color: #c5ffca;
+  transition: 0.3s;
+}
+
+.card-display {
+  border-radius: 20px;
+}
+
+.createaccountnoti {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(37, 37, 37, 0.445);
+  height: 100%;
+  display: none;
+}
+
+.createaccountnoti .row {
+  width: 30%;
+  margin: auto;
+  background-color: white;
+  text-align: center;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.signuptext {
+  font-size: 15px;
+}
+
+.signinbtn button {
+  background-color: #ce0037;
+  color: white;
+  font-size: 20px;
+  padding: 5px 25px;
+  border-radius: 10px;
+  font-weight: 700;
+  border: none;
+  box-shadow: 0 0 0.3rem black;
+  transition: 0.3s;
+}
+
+.signinbtn button:hover {
+  background-color: white;
+  color: #ce0037;
+  transition: 0.3s;
+}
+
+.closehere i {
+  font-size: 30px;
+  color: red;
+}
+
+.closehere i:hover {
+  color: #ce0037;
+  cursor: pointer;
+}
+
+.plays {
+  background-color: #ffcedb;
+  color: #ce0037;
+  text-align: center;
+  width: 40%;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+
+.rawr {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close {
+  text-align: left;
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#copyIcon:hover {
+  cursor: pointer;
+}
+
+.leaderbutton {
+  padding: 5px 20px;
+  border: none;
+  background-color: #ce0037;
+  color: white;
+  border-radius: 20px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.leaderbutton:hover {
+  color: #ce0037;
+  transition: 0.3s;
+  background-color: #ffcedb;
+}
+
+.viewmorebtn {
+  padding: 5px 20px;
+  background-color: #ffcedb;
+  color: #ce0037;
+  border: 2px solid #ce0037;
+  border-radius: 10px;
+  font-weight: 700;
+}
+
+.image-container {
+  max-width: 310px;
+  max-height: 200px;
+  min-height: 200px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px 5px 0 0;
+  border-radius: 5px;
+}
+
+.image-container img {
+  border-radius: 5px 5px 0 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.button button {
+  padding: 10px 25px;
+  font-size: 20px;
+  border: none;
+  border-radius: 15px;
+  font-weight: 700;
+  background-color: #ce0037;
+  color: white;
+  margin: 20px;
+  transition: 0.3s;
+  box-shadow: 0 0 0.3rem black;
+}
+
+.button button:hover {
+  background-color: white;
+  color: #ce0037;
+  transition: 0.3s;
+}
+
+@media screen and (max-width: 670px) {
+  .image-container {
+    max-width: 500px;
+    max-height: 200px;
+    min-height: 200px;
+    overflow: hidden;
+  }
+
+  .box {
+    width: 100%;
+  }
+
+  .createaccountnoti .row {
+    width: 100%;
+  }
+
+  .join {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media screen and (max-width: 994px) {
+  .image-container {
+    max-width: 500px;
+    max-height: 200px;
+    min-height: 200px;
+    overflow: hidden;
+  }
+
+  .createaccountnoti .row {
+    width: 60%;
+  }
+
+  .box {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .image-container {
+    max-width: 600px;
+    max-height: 200px;
+    min-height: 200px;
+    overflow: hidden;
+  }
+
+  .card {
+    margin-top: 20px;
+  }
+
+  .pagetitle {
+    padding-top: 20px;
+    padding-bottom: 0;
+  }
+}

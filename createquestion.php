@@ -4,9 +4,8 @@ session_start();
 $db_server = "localhost";
 $db_user = "root";
 $db_pass = "";
-$db_name = "quizapp";
+$db_name = "khmer-quizter";
 $conn = "";
-
 try {
     $conn = mysqli_connect(
         $db_server,
@@ -24,8 +23,6 @@ try {
     echo "Maybe the server is offline?";
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Establish database connection
-    // Check if QuizName, Quiztype, and image are set
     if (isset($_POST["question"]) && isset($_POST["answer1"]) && isset($_POST["answer2"])) {
         $question = mysqli_real_escape_string($conn, $_POST['question']);
         $answer1 = isset($_POST['answer1']) ? mysqli_real_escape_string($conn, $_POST['answer1']) : 'NULL';
@@ -37,9 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $iscorrect2 = $_POST['iscorrect2'];
         $iscorrect3 = $_POST['iscorrect3'];
         $iscorrect4 = $_POST['iscorrect4'];
-
-
-        // Move the uploaded image to the destination directory
         $createquestion = "INSERT INTO Question (Question,Duration) VALUES ('$question','$duration')";
         if (mysqli_query($conn, $createquestion)) {
             $QuizID = $_SESSION['QuizID'];
@@ -78,18 +72,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo "No rows returned from the query.";
             }
         } else {
-            // Handle errors or if the query is unsuccessful
             echo "Error executing the query: " . $conn->error;
         }
     } else {
         echo "Error: ";
     }
-
-    // Close the statement
-
-
 } else {
     echo "Invalid request.";
 }
-
-    // Close the database connection

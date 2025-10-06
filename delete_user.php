@@ -1,9 +1,8 @@
 <?php
 session_start();
-include "database.php";
+include "database/database.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Check if the quiz ID is provided
     if (isset($_POST["userid"])) {
         $userid = $_POST["userid"];
 
@@ -11,7 +10,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $trydelete = "DELETE FROM UserAccount WHERE UserID = $userid";
             $resulte = mysqli_query($conn, $trydelete);
         } catch (Exception $e) {
-            // Handle the exception here
             // echo "Error: " . $e->getMessage();
         }
 
@@ -36,12 +34,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 if ($resultsss) {
                                     $lastdelete = "DELETE FROM Score WHERE UserID = '$userid'";
                                     $deletequiz = "DELETE FROM Quiz WHERE QuizID = '$quizId'";
-                                    
                                     $finalresult = mysqli_query($conn, $lastdelete);
                                     $resultssss = mysqli_query($conn, $deletequiz);
-                                   
                                     if ($resultssss && $finalresult) {
-                                        // echo "Sucess";
                                     } else {
                                         echo "Error: " . mysqli_error($conn);
                                         echo "meow";
@@ -61,16 +56,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo "meow";
             }
         }
-        // If the first delete operation was successful or no exception occurred
-
-
-
-
-
     } else {
         echo "Error: Quiz ID is missing.";
     }
 } else {
-    // Invalid request method
     echo "Error: Invalid request method.";
 }

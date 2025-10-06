@@ -1,0 +1,126 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+
+.josefin-sans {
+  font-family: "Josefin Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.questioning {
+  width: 40%;
+  margin: auto;
+}
+
+.questioning h1 {
+  font-size: 25px;
+}
+
+.questioning input {
+  width: 100%;
+  background-color: #d9d9d9;
+  font-size: 20px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  padding: 10px 25px;
+}
+
+.answer h1 {
+  font-size: 25px;
+  margin-right: 10px;
+}
+
+.answer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.answer input {
+  width: 70%;
+  background-color: #d9d9d9;
+  font-size: 20px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  padding: 10px 25px;
+}
+
+.answer i {
+  font-size: 30px;
+  margin-left: 10px;
+  color: #ce0037;
+}
+
+.duration {
+  justify-content: center;
+  align-items: center;
+  margin-top: 2%;
+}
+
+.duration h1 {
+  margin: 0;
+  margin-right: 10px;
+}
+
+.duration input {
+  width: 50%;
+}
+
+.answer i:hover {
+  cursor: pointer;
+}
+
+nav {
+  background-color: #d9d9d9;
+  padding: 20px;
+  box-shadow: 0 0 0.3rem black;
+}
+
+.leave {
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  background-color: #ce0037;
+  padding: 5px 20px;
+  border: none;
+  border-radius: 20px;
+  transition: 0.3s;
+  box-shadow: 0 0 0.3rem black;
+}
+
+.leave:hover {
+  color: #ce0037;
+  background-color: white;
+  transition: 0.3s;
+}
+
+.main {
+  box-shadow: 0 0 0.2rem black;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+#finish {
+  /* display: none; */
+  background-color: #63ff72;
+  margin-right: 25px;
+  color: white;
+}
+
+#finish:hover {
+  background-color: #9effa8;
+  color: #02760e;
+}
+
+@media screen and (max-width: 670px) {
+  .questioning {
+    width: 80%;
+    margin: auto;
+  }
+
+  .answer h1 {
+    font-size: 15px;
+    margin-bottom: 0;
+  }
+}

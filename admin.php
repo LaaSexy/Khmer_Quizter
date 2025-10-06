@@ -1,5 +1,5 @@
 <?php
-include "database.php";
+include "database/database.php";
 session_start();
 if (!isset($_SESSION['Username'])) {
     header("Location: index.php");
@@ -10,10 +10,7 @@ if ($_SESSION['Role'] !== "Admin") {
     exit;
 }
 $currentPage = "admin.php";
-include_once "nav2.php";
-
-
-
+include_once "dashboard.php";
 ?>
 <script>
     $(document).ready(function() {
@@ -144,7 +141,6 @@ include_once "nav2.php";
 </style>
 
 <div class="container josefin-sans">
-
     <div class="row" id="myTable">
         <?php
         $countuser = "SELECT COUNT(*) AS user_count FROM UserAccount where Role = 'User'";
@@ -166,7 +162,6 @@ include_once "nav2.php";
         $getuser = "SELECT * FROM UserAccount where Role != 'Admin' and Role !='Guest'";
         $result = mysqli_query($conn, $getuser);
         if ($result) {
-
             while ($row = mysqli_fetch_assoc($result)) {
                 $userid = $row['UserID'];
                 $countquiz = "SELECT COUNT(*) AS quiz_count FROM Quiz WHERE CreatorID = $userid";
@@ -195,24 +190,14 @@ include_once "nav2.php";
             echo "<div class='col-12 p-3'><h3>No user found !</h3></div>";
         }
         ?>
-
     </div>
-
-
 </div>
-<br><br><br><br>
 <script>
     $(document).ready(function() {
-        // Get all elements with the class "disableButton"
         const buttons = document.getElementsByClassName("disableButton");
-
-        // Iterate over the collection of elements
         for (let i = 0; i < buttons.length; i++) {
             const button = buttons[i];
-
-            // Check if the button has the 'disabled' class
             if (button.classList.contains("disabled")) {
-                // Change the text content of the button
                 button.textContent = "Enable User";
             }
         }
@@ -241,21 +226,18 @@ include_once "nav2.php";
                             console.error(error);
                         }
                     });
-                } else {
-                    // User clicked "No" or outside the modal
-                    // Perform any alternative action or do nothing
-                }
+                } 
             });
         })
         $('.diable').click(function() {
             var userid = $(this).siblings().eq(4).val();
             console.log(userid);
             $.ajax({
-                url: 'disableuser.php', // URL to the script that fetches questions from the database
+                url: 'disableuser.php',
                 method: 'GET',
                 data: {
                     userid: userid
-                }, // Pass quizid to identify the quiz
+                },
                 success: function(response) {
                     location.reload();
                 },
@@ -265,7 +247,5 @@ include_once "nav2.php";
                 }
             });
         })
-
-
     })
 </script>

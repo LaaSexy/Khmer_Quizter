@@ -1,5 +1,5 @@
 <?php
-include "database.php";
+include "database/database.php";
 session_start();
 if (!isset($_SESSION['Username'])) {
     header("Location: index.php");
@@ -12,68 +12,7 @@ if ($_SESSION['Role'] === "Admin") {
 $currentPage = 'home.php';
 include_once 'nav.php';
 ?>
-<style>
-    .welcome {
-        background-color: #FFCEDB;
-        border-radius: 20px;
-        box-shadow: 0 0 0.3rem black;
-        padding: 30px;
-        margin-bottom: 100px;
-    }
-
-    .back {
-
-        background-color: white;
-        color: #CE0037;
-        padding: 5px 30px;
-        font-size: 30px;
-        border: none;
-        border-radius: 20px;
-        font-weight: 700;
-        box-shadow: 0 0 0.3rem black;
-        transition: 0.3s;
-    }
-
-    .back:hover {
-        background-color: #CE0037;
-        color: white;
-        transition: 0.3s;
-    }
-
-    .imageicon img {
-        width: 150px;
-        border-radius: 50%;
-        border: #CE0037 solid 3px
-    }
-
-    .imageicon h1 {
-        font-size: 25px;
-    }
-
-    .imageicon h2 {
-        font-size: 30px;
-        color: #CE0037;
-        font-weight: 700;
-    }
-
-    .selectagent {
-        padding: 5px 30px;
-        font-size: 20px;
-        background-color: #CE0037;
-        border: none;
-        color: white;
-        font-weight: 700;
-        border-radius: 20px;
-        box-shadow: 0 0 0.3rem black;
-        transition: 0.3s;
-    }
-
-    .selectagent:hover {
-        background-color: white;
-        color: #CE0037;
-        transition: 0.3s;
-    }
-</style>
+<link rel="stylesheet" href="styles/avatar.css">
 <div class="container welcome mt-5">
     <div class="row">
         <div class="col-xxl-2 col-12 text-start">
@@ -89,14 +28,9 @@ include_once 'nav.php';
         <?php
         $icon = array(
             "Sage" => "https://media.valorant-api.com/agents/569fdd95-4d10-43ab-ca70-79becc718b46/displayicon.png",
-            "Brimstone" => "https://th.bing.com/th/id/R.3b25310ccef630cf99cc2cc97e1bfbec?rik=rXU3SEyt4JgBdg&pid=ImgRaw&r=0",
             "Neon" => "https://cdn3.emoji.gg/emojis/3666-valorant-neon-icon.png",
             "Killjoy" => "https://media.valorant-api.com/agents/1e58de9c-4950-5125-93e9-a0aee9f98746/displayicon.png",
-            "Reyna" => "https://cdn.mobalytics.gg/assets/valorant/images/agents/icons/reyna.png",
-            "Omen" => "https://cdn.mobalytics.gg/assets/valorant/images/agents/icons/omen.png",
-            "Sova" => "https://th.bing.com/th/id/R.2ee62c45834e7c725a260a48e062956e?rik=KRKBookHL14Xow&pid=ImgRaw&r=0",
             "Jett" => "https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png",
-            "Cypher" => "https://th.bing.com/th/id/R.9a9290c3d586dec2a31ade7b6be03bc3?rik=YZTHix10rMOlVg&pid=ImgRaw&r=0",
             "Breach" => "https://val.owen.biz/Resources/Thumbnails/breach.png",
             "Viper" => "https://media.valorant-api.com/agents/707eab51-4836-f488-046a-cda6bf494859/displayicon.png",
             "Yoru" => "https://media.valorant-api.com/agents/7f94d92c-4234-0a36-9646-3a87eb8b5c89/displayicon.png",
@@ -111,7 +45,12 @@ include_once 'nav.php';
             "Raze" => "https://www.vlr.gg/img/vlr/game/agents/raze.png",
             "Astra" => "https://media.valorant-api.com/agents/41fb69c1-4189-7b37-f117-bcaf1e96f1bf/displayicon.png",
             "Syke" => "https://media.valorant-api.com/agents/6f2a04ca-43e0-be17-7f36-b3908627744d/displayicon.png",
-            "Deadlock" => "https://media.valorant-api.com/agents/cc8b64c8-4b25-4ff9-6e7f-37b4da43d235/displayicon.png"
+            "Deadlock" => "https://media.valorant-api.com/agents/cc8b64c8-4b25-4ff9-6e7f-37b4da43d235/displayicon.png",
+            "Brimstone" => "https://media.valorant-api.com/agents/9f0d8ba9-4140-b941-57d3-a7ad57c6b417/displayicon.png",
+            "Cypher" => "https://media.valorant-api.com/agents/117ed9e3-49f3-6512-3ccf-0cada7e3823b/displayicon.png",
+            "Omen" => "https://media.valorant-api.com/agents/8e253930-4c05-31dd-1b6c-968525494517/displayicon.png",
+            "Skye" => "https://media.valorant-api.com/agents/6f2a04ca-43e0-be17-7f36-b3908627744d/displayicon.png",
+            "Reyna" => "https://media.valorant-api.com/agents/a3bfb853-43b2-7238-a4f1-ad90e9e46bcc/displayicon.png"
         );
         foreach ($icon as $key => $value) {
             echo "<div class='col-xxl-2 col-lg-3 col-md-4 col-6 imageicon text-center mt-3'> 
@@ -122,19 +61,10 @@ include_once 'nav.php';
                     </form>
                 </div>";
         }
-
         ?>
-
-
     </div>
 </div>
-<script>
-    $(document).ready(function() {
-        $('.back').click(function() {
-            window.location = "home.php";
-        })
-    })
-</script>
+<script src="javascripts/avatar.js"></script>
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['agent_name'])) {
@@ -154,6 +84,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 } else {
 }
 $conn->close();
-
-
 ?>
