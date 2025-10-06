@@ -216,5 +216,4 @@ if (isset($_SESSION['Username'])) {
 </body>
 <script src="node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
 <script src="javascripts/index.js"></script>
-
 </html>

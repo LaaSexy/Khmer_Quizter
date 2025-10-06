@@ -31,7 +31,6 @@ if ($result) {
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <link rel="stylesheet" href="styles/addquestion.css">
-
         <nav>
             <button class="leave leaveBtn josefin-sans"><i class="bi bi-backspace-fill"></i> Leave</button>
         </nav>
@@ -42,7 +41,6 @@ if ($result) {
                         <h1 class="text-end px-4 ques"></h1>
                     </div>
                     <div class="col-12 text-center">
-
                         <h1 id="session-quiz" class="josefin-sans"><?php echo $quiztitle ?></h1>
                         <h2 class="josefin-sans">Creating a question</h2>
                     </div>
